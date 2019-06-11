@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\auth",
+    "\\src\\app\\auth\\auth",
+    "\\src\\app\\header",
+    "\\src\\app\\recipes",
+    "\\src\\app\\recipes\\recipe-edit",
+    "\\src\\app\\recipes\\recipe-start",
+    "\\src\\app\\shopping-list"
+  ],
+  "SelectedNode": "\\src\\app\\shopping-list\\shopping-list.service.ts",
+  "PreviewInSolutionExplorer": false
+}

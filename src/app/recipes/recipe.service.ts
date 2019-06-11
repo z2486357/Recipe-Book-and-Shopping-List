@@ -3,13 +3,16 @@ import { Injectable } from '@angular/core';
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { Subject } from 'rxjs/Subject';
+import { Headers, Http, Response } from "@angular/http";
+import { map, catchError } from "rxjs/operators";
+import { throwError } from "rxjs";
 
 @Injectable()
 export class RecipeService{
   newRecipe = new Subject<Recipe[]>();
 
-    constructor(private shoppinglistservice:ShoppingListService){}
-
+  constructor(private shoppinglistservice: ShoppingListService,
+              private http:Http) { }
     private recipes: Recipe[]=[
         new Recipe(
             'Recipe 1',
@@ -55,8 +58,37 @@ export class RecipeService{
       this.newRecipe.next(this.recipes.slice());
     }
 
-  deleteRecipe(index:number) {
-    this.recipes.splice(index, 1)
-    this.newRecipe.next(this.recipes.slice());
-  }
+    deleteRecipe(index:number) {
+      this.recipes.splice(index, 1)
+      this.newRecipe.next(this.recipes.slice());
+    }
+
+    saveToServer() {
+      return this.http.put('https://course-project-c59ce.firebaseio.com/recipeData.json', this.getRecipes());
+    }
+
+    fetchFromServer() {
+      return this.http.get('https://course-project-c59ce.firebaseio.com/recipeData.json')
+        .pipe(map(
+          (response: Response) => {
+            if (response.json() === null) {
+              console.log('There is no recipe data in server');
+            } else {
+              this.recipes = response.json();
+              for (let recipe of this.recipes) {
+                if (!recipe['ingredients']) {
+                  recipe['ingredients'] = [];
+                }
+              }
+              this.newRecipe.next(this.recipes.slice());  
+            }
+            
+          }
+        ))
+        .pipe(catchError(
+          (error: Response) => {
+            return throwError('Something Wrong');
+          }
+        ))
+    }
 }
