@@ -5,11 +5,12 @@
     "\\src\\app",
     "\\src\\app\\auth",
     "\\src\\app\\auth\\auth",
-    "\\src\\app\\header",
     "\\src\\app\\recipes",
     "\\src\\app\\recipes\\recipe-start",
+    "\\src\\app\\shared",
+    "\\src\\app\\shared\\loadingspinner",
     "\\src\\app\\shopping-list"
   ],
-  "SelectedNode": "\\src\\app\\auth\\auth\\auth.component.ts",
+  "SelectedNode": "\\src\\app\\auth\\auth\\auth.component.html",
   "PreviewInSolutionExplorer": false
 }
