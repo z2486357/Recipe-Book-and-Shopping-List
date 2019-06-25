@@ -19,6 +19,7 @@ import { RecipeService } from './recipes/recipe.service';
 import { HttpModule } from '@angular/http';
 import { AuthComponent } from './auth/auth/auth.component';
 import { LoadingSpinnerComponent } from './shared/loadingspinner/loading-spinner.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { LoadingSpinnerComponent } from './shared/loadingspinner/loading-spinner
     BrowserModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    HttpClientModule,
     HttpModule
   ],
   providers: [ShoppingListService, RecipeService],
