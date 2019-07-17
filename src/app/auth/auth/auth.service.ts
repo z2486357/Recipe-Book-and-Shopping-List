@@ -4,13 +4,14 @@ import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
-interface AuthResponseData {
+export interface AuthResponseData {
   kind: string;
   idToken: string;
   email: string;
   refreshToken: string;
   expiresIn: string;
   localId: string;
+  registered?:boolean;
 }
 
 
@@ -38,5 +39,15 @@ export class AuthService {
         }
         return throwError(errorMessage);
       }));
+  }
+
+  login(email:string,password:string){
+    return this.http.post<AuthResponseData>(
+      'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyB-4JcEVUbxuvTZyVi3QOe1FJAUbJVDtEA',
+    {
+        email: email,
+        password: password,
+        returnSecureToken: true
+    })
   }
 }
