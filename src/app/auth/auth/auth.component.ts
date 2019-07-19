@@ -33,8 +33,7 @@ export class AuthComponent implements OnInit {
     this.isLoading = true;
     if (this.isLoginMode){
       authObs=this.authservice.login(email,password);
-    } else {
-      
+    } else {      
       authObs=this.authservice.signup(email, password);
     }
     authObs.subscribe(
