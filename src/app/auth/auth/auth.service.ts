@@ -47,7 +47,7 @@ export class AuthService {
     {
         email: email,
         password: password,
-        returnSecureToken: true
+        returnSecureToken: true,
     })
   }
 }
