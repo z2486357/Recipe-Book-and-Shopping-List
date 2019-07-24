@@ -29,7 +29,7 @@ export class AuthService {
         returnSecureToken: true
       })
       .pipe(catchError(errorRes=>{
-        let errorMessage ='An unknown error occured!';
+        let errorMessage ='An unknown error occured.';
         if(!errorRes.error || !errorRes.error.error){
           return throwError(errorMessage);
         }
