@@ -1,6 +1,6 @@
 # CourseProject
 
-This is the record about the course project of a course on udemy.
+This is the record of the course project on udemy.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8.
 
