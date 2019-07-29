@@ -14,23 +14,23 @@ export class RecipeService{
   constructor(private shoppinglistservice: ShoppingListService,
               private http:Http) { }
     private recipes: Recipe[]=[
-        new Recipe(
-            'Recipe 1',
-            'This is just a test1',
-            'https://farm5.staticflickr.com/4891/45165261135_69cb589907_b.jpg',
-            [
-                new Ingredient('Meat',1),
-                new Ingredient('French Fries',20)
-            ]),
-        new Recipe(
-            'Recipe 2',
-            'This is just a test2',
-            'https://farm5.staticflickr.com/4891/45165261135_69cb589907_b.jpg',
-            [
-                new Ingredient('Buns',2),
-                new Ingredient('Meat',1)
-            ]
-            )
+        // new Recipe(
+        //     'Recipe 1',
+        //     'This is just a test1',
+        //     'https://farm5.staticflickr.com/4891/45165261135_69cb589907_b.jpg',
+        //     [
+        //         new Ingredient('Meat',1),
+        //         new Ingredient('French Fries',20)
+        //     ]),
+        // new Recipe(
+        //     'Recipe 2',
+        //     'This is just a test2',
+        //     'https://farm5.staticflickr.com/4891/45165261135_69cb589907_b.jpg',
+        //     [
+        //         new Ingredient('Buns',2),
+        //         new Ingredient('Meat',1)
+        //     ]
+        //     )
   ]
 
     getRecipes(){
