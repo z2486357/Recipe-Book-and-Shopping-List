@@ -4,15 +4,17 @@ import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { Subject } from 'rxjs/Subject';
 import { Headers, Http, Response } from "@angular/http";
-import { map, catchError } from "rxjs/operators";
+import { map, catchError, take, exhaustMap } from "rxjs/operators";
 import { throwError } from "rxjs";
+import { AuthService } from '../auth/auth/auth.service';
 
 @Injectable()
 export class RecipeService{
   newRecipe = new Subject<Recipe[]>();
 
   constructor(private shoppinglistservice: ShoppingListService,
-              private http:Http) { }
+              private http:Http,
+              private authservice:AuthService) { }
     private recipes: Recipe[]=[
         // new Recipe(
         //     'Recipe 1',
@@ -68,27 +70,32 @@ export class RecipeService{
     }
 
     fetchFromServer() {
-      return this.http.get('https://course-project-c59ce.firebaseio.com/recipeData.json')
-        .pipe(map(
-          (response: Response) => {
-            if (response.json() === null) {
-              console.log('There is no recipe data in server');
-            } else {
-              this.recipes = response.json();
-              for (let recipe of this.recipes) {
-                if (!recipe['ingredients']) {
-                  recipe['ingredients'] = [];
-                }
+      return this.authservice.user.pipe(take(1),
+      exhaustMap(user=>{
+        return this.http.get(
+          'https://course-project-c59ce.firebaseio.com/recipeData.json?auth='+user.token
+          );
+      }),
+      map(
+        (response: Response) => {
+          if (response.json() === null) {
+            console.log('There is no recipe data in server');
+          } else {
+            this.recipes = response.json();
+            for (let recipe of this.recipes) {
+              if (!recipe['ingredients']) {
+                recipe['ingredients'] = [];
               }
-              this.newRecipe.next(this.recipes.slice());  
             }
-            
+            this.newRecipe.next(this.recipes.slice());  
           }
-        ))
-        .pipe(catchError(
-          (error: Response) => {
-            return throwError('Something Wrong');
-          }
-        ))
+          
+        }
+      ),
+      catchError(
+        (error: Response) => {
+          return throwError('Something Wrong');
+        }
+      ))
     }
 }

@@ -18,8 +18,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.userSub=this.authService.user.subscribe(user=>{
-      //this.isAuth=!user? false:true;
-      this.isAuth=true;
+      this.isAuth=!user? false:true;
+      //this.isAuth=true;
     });
   }
   ngOnDestroy(){
@@ -36,11 +36,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   fetchdata() {
-    this.recipeservice.fetchFromServer().subscribe(
-      (response) => console.log(response),
-    )
-    this.shoppinglistservice.fetchFromServer().subscribe(
-      (response) => console.log(response),
-    )
+    this.recipeservice.fetchFromServer().subscribe();
+    // this.shoppinglistservice.fetchFromServer().subscribe(
+    //   (response) => console.log(response),
+    // )
   }
 }
