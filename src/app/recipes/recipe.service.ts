@@ -4,16 +4,17 @@ import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { Subject } from 'rxjs/Subject';
 import { Headers, Http, Response } from "@angular/http";
-import { map, catchError, take, exhaustMap } from "rxjs/operators";
+import { map, catchError, take, exhaustMap, tap } from "rxjs/operators";
 import { throwError } from "rxjs";
 import { AuthService } from '../auth/auth/auth.service';
+import { HttpParams, HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class RecipeService{
   newRecipe = new Subject<Recipe[]>();
 
   constructor(private shoppinglistservice: ShoppingListService,
-              private http:Http,
+              private http:HttpClient,
               private authservice:AuthService) { }
     private recipes: Recipe[]=[
         // new Recipe(
@@ -35,6 +36,10 @@ export class RecipeService{
         //     )
   ]
 
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes;
+    this.newRecipe.next(this.recipes.slice());
+  }
     getRecipes(){
         return this.recipes.slice()
     }
@@ -70,32 +75,48 @@ export class RecipeService{
     }
 
     fetchFromServer() {
-      return this.authservice.user.pipe(take(1),
-      exhaustMap(user=>{
-        return this.http.get(
-          'https://course-project-c59ce.firebaseio.com/recipeData.json?auth='+user.token
-          );
-      }),
-      map(
-        (response: Response) => {
-          if (response.json() === null) {
-            console.log('There is no recipe data in server');
-          } else {
-            this.recipes = response.json();
-            for (let recipe of this.recipes) {
-              if (!recipe['ingredients']) {
-                recipe['ingredients'] = [];
-              }
-            }
-            this.newRecipe.next(this.recipes.slice());  
-          }
+      return this.http
+      .get<Recipe[]>(
+        'https://course-project-c59ce.firebaseio.com/recipeData.json'
+      )
+      .pipe(
+        map(recipes => {
+          return recipes.map(recipe => {
+            return {
+              ...recipe,
+              ingredients: recipe.ingredients ? recipe.ingredients : []
+            };
+          });
+        }),
+        tap(recipes => {
+          this.setRecipes(recipes);
+        })
+      );
+
+      //   return this.http.get(
+      //     'https://course-project-c59ce.firebaseio.com/recipeData.json'
+      //     )
+      // .pipe(
+      //   map(
+      //   (response: Response) => {
+      //     if (response.json() === null) {
+      //       console.log('There is no recipe data in server');
+      //     } else {
+      //       this.recipes = response.json();
+      //       for (let recipe of this.recipes) {
+      //         if (!recipe['ingredients']) {
+      //           recipe['ingredients'] = [];
+      //         }
+      //       }
+      //       this.newRecipe.next(this.recipes.slice());  
+      //     }
           
-        }
-      ),
-      catchError(
-        (error: Response) => {
-          return throwError('Something Wrong');
-        }
-      ))
+      //   }
+      // ),
+      // catchError(
+      //   (error: Response) => {
+      //     return throwError('Something Wrong');
+      //   }
+      // ))
     }
 }
