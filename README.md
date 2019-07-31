@@ -1,4 +1,4 @@
-# CourseProject
+# R
 
 This is the record of the course project on udemy.
 
