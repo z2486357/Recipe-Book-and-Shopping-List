@@ -1,4 +1,4 @@
-# CourseProject
+# Recipe Book and Shopping list
 
 This is the record of the course project on udemy.
 
