@@ -30,9 +30,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.recipeservice.saveToServer().subscribe(
       (response) => console.log(response),
     );
-    this.shoppinglistservice.saveToServer().subscribe(
-      (response) => console.log(response),
-    );
+    // this.shoppinglistservice.saveToServer().subscribe(
+    //   (response) => console.log(response),
+    // );
   }
 
   fetchdata() {
