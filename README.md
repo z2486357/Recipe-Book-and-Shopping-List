@@ -1,6 +1,8 @@
 # Recipe Book and Shopping list
 
 This is the record of the course project on udemy.
+For detail demo please visit https://yu-cheng-a41d4.firebaseapp.com/work/recipeBook
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8.
 
