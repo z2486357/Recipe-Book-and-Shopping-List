@@ -4,7 +4,7 @@ This is the record of the course project on udemy.
 
 For detail demo please visit https://yu-cheng-a41d4.firebaseapp.com/work/recipeBook
 
-Also, you can visit https://yu-cheng-a41d4.web.app/ to play with it.
+Also, you can visit https://course-project-c59ce.web.app to play with it.
 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8.
